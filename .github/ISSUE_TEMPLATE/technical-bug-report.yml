@@ -1,0 +1,187 @@
+name: 🐛 Technical Bug Report
+description: Report a technical problem with the activities management system
+title: "[BUG]: <brief description>"
+labels: ["bug", "technical-issue", "teacher-request"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Technical Bug Report
+        
+        Use this form to report technical problems with the Mergington High School Activities system that are not related to student registration.
+        
+        **Please provide specific details to help the Copilot coding agent diagnose and fix the issue efficiently.**
+
+  - type: dropdown
+    id: bug_category
+    attributes:
+      label: Bug Category
+      description: What type of technical issue is this?
+      options:
+        - Website display/layout problems
+        - Login/authentication issues
+        - Activity list not loading or displaying incorrectly
+        - Search/filtering not working
+        - Page crashes or freezes
+        - Performance/speed issues
+        - Mobile responsiveness problems
+        - Browser compatibility issues
+        - API/backend errors
+        - Database connectivity problems
+        - Other technical issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: Bug Description
+      description: Describe the problem clearly and specifically
+      placeholder: |
+        Example: "When I click the 'Morning Fitness' activity, the modal window opens but shows information for 'Chess Club' instead. This happens every time I try to view Morning Fitness details."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+      placeholder: |
+        Example: "The modal should display Morning Fitness information including the correct schedule (6:30 AM - 7:45 AM) and description about physical training."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: List the exact steps that cause this bug
+      placeholder: |
+        1. Open the activities website
+        2. Log in as teacher
+        3. Scroll to find "Morning Fitness" activity
+        4. Click on "Morning Fitness" card
+        5. Observe incorrect information displayed
+    validations:
+      required: true
+
+  - type: input
+    id: browser_info
+    attributes:
+      label: Browser and Version
+      description: What browser are you using?
+      placeholder: e.g., "Chrome 119", "Firefox 120", "Safari 17", "Edge 118"
+    validations:
+      required: true
+
+  - type: input
+    id: device_info
+    attributes:
+      label: Device Information
+      description: What device/operating system?
+      placeholder: e.g., "Windows 11 laptop", "MacBook Pro", "iPhone 14", "Android tablet"
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How Frequently Does This Occur?
+      description: How often does this bug happen?
+      options:
+        - "Always - happens every time"
+        - "Often - happens most of the time"  
+        - "Sometimes - happens occasionally"
+        - "Rarely - happened once or twice"
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_messages
+    attributes:
+      label: Error Messages or Console Logs
+      description: Copy any error messages, warnings, or console log entries exactly as they appear
+      placeholder: |
+        Example from browser console:
+        "TypeError: Cannot read property 'description' of undefined at renderActivityCard (app.js:123)"
+
+  - type: textarea
+    id: screenshots_description
+    attributes:
+      label: Visual Description
+      description: Describe what you see on screen (since we can't attach screenshots here)
+      placeholder: |
+        Example: "The activity card shows 'Chess Club' at the top, but below it shows the Monday/Wednesday/Friday schedule which is for Morning Fitness. The description still talks about chess strategies."
+
+  - type: dropdown
+    id: user_impact
+    attributes:
+      label: Impact on Your Work
+      description: How much does this bug affect your ability to do your job?
+      options:
+        - "Blocking - cannot complete essential tasks"
+        - "High - significantly impacts daily work"
+        - "Medium - causes inconvenience but workarounds exist"  
+        - "Low - minor annoyance"
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Temporary Workaround (if any)
+      description: Have you found any way to work around this issue?
+      placeholder: e.g., "I can still register students by typing the activity name directly in the URL"
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Check all that apply - what needs to work properly when this bug is fixed?
+      options:
+        - label: The reported bug no longer occurs
+          required: true
+        - label: Normal functionality works as expected
+          required: true
+        - label: Fix doesn't break other features
+          required: true
+        - label: Issue is resolved across different browsers (if applicable)
+          required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## Implementation Hints for Copilot Agent
+        
+        **Common Bug Categories and Investigation Areas**:
+        
+        **Frontend Issues** (`src/static/`):
+        - `index.html`: Layout, modals, form structure
+        - `app.js`: JavaScript functionality, API calls, event handlers
+        - `styles.css`: Visual styling, responsive design
+        
+        **Backend Issues** (`src/backend/`):
+        - `routers/activities.py`: Activity API endpoints
+        - `routers/auth.py`: Authentication logic
+        - `database.py`: Data structure, database queries
+        - `app.py`: Server configuration, routing
+        
+        **Debugging Approach**:
+        1. **Reproduce the issue**: Follow the exact steps provided
+        2. **Check browser console**: Look for JavaScript errors
+        3. **Verify API responses**: Ensure backend returns correct data
+        4. **Test across browsers**: Check for browser-specific issues
+        5. **Review recent changes**: Look for code that might have caused regression
+        
+        **Testing Requirements**:
+        - Verify fix resolves the specific scenario described
+        - Test on multiple browsers if browser compatibility mentioned
+        - Ensure fix doesn't introduce new bugs
+        - Test with different teacher accounts and activities
+        
+        **Performance Issues**: Check database queries, API response times, frontend rendering
+        **Display Issues**: Verify CSS, responsive design, modal behavior
+        **Data Issues**: Check data mapping between frontend and backend
