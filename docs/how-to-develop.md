@@ -66,3 +66,17 @@ These dependencies will be installed when you run `pip install -r requirements.t
 
 > [!IMPORTANT]
 > All data is stored in memory, which means data will be reset when the server restarts.
+
+## For Teachers: Requesting Changes
+
+If you are a teacher who needs changes to the activities system but are not comfortable modifying the code directly, we have created **Issue Template Forms** to make it easy to request changes.
+
+👉 **[View the Issue Templates Guide](issue-templates-guide.md)** for detailed instructions on how to request:
+- Adding new activities
+- Modifying existing activities  
+- Removing activities
+- Fixing student registration issues
+- Reporting technical bugs
+- Requesting new features
+
+These templates ensure all necessary information is provided so the Copilot coding agent can efficiently implement your requests without further clarification.

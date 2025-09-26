@@ -1,0 +1,163 @@
+name: 🗑️ Remove Activity
+description: Request to remove an activity that is no longer being offered
+title: "[REMOVE ACTIVITY]: Remove <activity name>"
+labels: ["enhancement", "remove-activity", "teacher-request"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Remove Activity Request
+        
+        Use this form to request removal of an extracurricular activity from the Mergington High School Activities system.
+        
+        **⚠️ Warning**: Removing an activity will also remove all student enrollments for that activity.
+        
+        **Please fill out all required fields below to help the Copilot coding agent implement your request efficiently.**
+
+  - type: dropdown
+    id: activity_name
+    attributes:
+      label: Activity to Remove
+      description: Which activity should be removed from the system?
+      options:
+        - Chess Club
+        - Programming Class
+        - Morning Fitness
+        - Soccer Team
+        - Art Club
+        - Math Competition Team
+        - Debate Team
+        - Weekend Robotics Workshop
+        - Manga Maniacs
+        - Other (please specify below)
+    validations:
+      required: true
+
+  - type: input
+    id: other_activity_name
+    attributes:
+      label: Other Activity Name
+      description: If you selected "Other" above, please specify the exact activity name
+      placeholder: e.g., "Drama Club"
+
+  - type: dropdown
+    id: removal_reason
+    attributes:
+      label: Reason for Removal
+      description: Why is this activity being removed?
+      options:
+        - Activity no longer offered by school
+        - Insufficient student interest/enrollment
+        - Teacher/advisor no longer available
+        - Budget/resource constraints
+        - Program discontinued
+        - Replaced by different activity
+        - Other (please explain below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: removal_explanation
+    attributes:
+      label: Detailed Explanation
+      description: Provide more context about why this activity needs to be removed
+      placeholder: e.g., "The teacher advisor is retiring and no replacement has been found", "Low enrollment for 3 consecutive semesters"
+    validations:
+      required: true
+
+  - type: input
+    id: current_participants
+    attributes:
+      label: Current Number of Enrolled Students
+      description: How many students are currently enrolled? (This helps confirm the impact)
+      placeholder: e.g., 5, 12, 0
+
+  - type: dropdown
+    id: student_notification
+    attributes:
+      label: Student Notification Status
+      description: Have currently enrolled students been notified of this change?
+      options:
+        - "Yes - students have been notified"
+        - "No - will notify students after system update"
+        - "Not applicable - no students currently enrolled"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative_activities
+    attributes:
+      label: Alternative Activities (if any)
+      description: Are there alternative activities students can join instead?
+      placeholder: e.g., "Students can join the similar 'Advanced Art Class' or 'Digital Media Club'"
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency Level
+      description: How soon does this activity need to be removed?
+      options:
+        - "Immediate - remove as soon as possible"
+        - "End of current semester"
+        - "End of current school year"
+        - "No specific deadline"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      description: Please confirm you understand the impact
+      options:
+        - label: "I understand that removing this activity will permanently delete it from the system"
+          required: true
+        - label: "I understand that all current student enrollments will be removed"
+          required: true
+        - label: "I have appropriate authorization to request this removal"
+          required: true
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Check all that apply - what needs to be completed for this request to be considered done?
+      options:
+        - label: Activity no longer appears in the activities list
+          required: true
+        - label: Students can no longer sign up for this activity
+          required: true
+        - label: All existing enrollments are removed from the system
+          required: true
+        - label: Activity data is completely removed from database
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## Implementation Hints for Copilot Agent
+        
+        **Database Structure**: Activities are stored in the `activities_collection` and referenced in `initial_activities` dictionary.
+        
+        **Files to modify**:
+        - `src/backend/database.py`: Remove the activity entry from `initial_activities` dictionary
+        - Ensure the activity key is completely removed, not just set to empty
+        
+        **Important considerations**:
+        - This is a destructive operation - once removed, all data for this activity is lost
+        - The activity will disappear from all API endpoints immediately
+        - Any students currently enrolled will lose their enrollment
+        - No cascading effects to other activities
+        - Verify the exact activity name matches what's in the database
+        
+        **Testing steps**:
+        1. Confirm activity exists before removal
+        2. Note current enrollment count
+        3. Remove activity from database configuration
+        4. Restart application/reload database
+        5. Verify activity no longer appears in `/activities` endpoint
+        6. Verify students cannot sign up for the removed activity

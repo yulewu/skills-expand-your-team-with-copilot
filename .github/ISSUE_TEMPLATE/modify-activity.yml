@@ -1,0 +1,169 @@
+name: ✏️ Modify Existing Activity
+description: Request to modify an existing activity's details, schedule, or capacity
+title: "[MODIFY ACTIVITY]: Update <activity name>"
+labels: ["enhancement", "modify-activity", "teacher-request"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Modify Existing Activity Request
+        
+        Use this form to request changes to an existing extracurricular activity in the Mergington High School Activities system.
+        
+        **Please fill out all required fields below to help the Copilot coding agent implement your request efficiently.**
+
+  - type: dropdown
+    id: activity_name
+    attributes:
+      label: Activity to Modify
+      description: Which existing activity needs to be modified?
+      options:
+        - Chess Club
+        - Programming Class
+        - Morning Fitness
+        - Soccer Team
+        - Art Club
+        - Math Competition Team
+        - Debate Team
+        - Weekend Robotics Workshop
+        - Manga Maniacs
+        - Other (please specify in comments)
+    validations:
+      required: true
+
+  - type: input
+    id: other_activity_name
+    attributes:
+      label: Other Activity Name
+      description: If you selected "Other" above, please specify the activity name
+      placeholder: e.g., "Drama Club"
+
+  - type: checkboxes
+    id: changes_requested
+    attributes:
+      label: What changes are needed?
+      description: Check all that apply
+      options:
+        - label: Change activity description
+        - label: Change meeting schedule (days/times)
+        - label: Change maximum participant limit
+        - label: Change activity name
+        - label: Other changes (describe in details below)
+
+  - type: textarea
+    id: new_description
+    attributes:
+      label: New Activity Description (if changing)
+      description: Provide the updated description for this activity
+      placeholder: e.g., "Updated description with new focus areas or requirements"
+
+  - type: dropdown
+    id: new_schedule_days
+    attributes:
+      label: New Meeting Days (if changing schedule)
+      description: Select all days the activity should meet
+      multiple: true
+      options:
+        - Monday
+        - Tuesday
+        - Wednesday
+        - Thursday
+        - Friday
+        - Saturday
+        - Sunday
+
+  - type: input
+    id: new_start_time
+    attributes:
+      label: New Start Time (if changing schedule)
+      description: What time should the activity start? (Use 24-hour format)
+      placeholder: e.g., 15:30 (for 3:30 PM), 07:00 (for 7:00 AM)
+
+  - type: input
+    id: new_end_time
+    attributes:
+      label: New End Time (if changing schedule)  
+      description: What time should the activity end? (Use 24-hour format)
+      placeholder: e.g., 17:00 (for 5:00 PM), 08:00 (for 8:00 AM)
+
+  - type: input
+    id: new_max_participants
+    attributes:
+      label: New Maximum Participants (if changing capacity)
+      description: How many students should be able to participate?
+      placeholder: e.g., 15, 25, 30
+
+  - type: input
+    id: new_activity_name
+    attributes:
+      label: New Activity Name (if renaming)
+      description: What should the new name be?
+      placeholder: e.g., "Advanced Chess Club"
+
+  - type: textarea
+    id: change_reason
+    attributes:
+      label: Reason for Changes
+      description: Why are these changes needed?
+      placeholder: e.g., "Need to accommodate more students", "Room availability changed", "Program requirements updated"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_details
+    attributes:
+      label: Additional Details or Special Considerations
+      description: Any other important information about these changes
+      placeholder: e.g., "Need to notify currently enrolled students", "Equipment requirements changed"
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Check all that apply - what needs to be completed for this request to be considered done?
+      options:
+        - label: Activity shows updated information on the website
+          required: true
+        - label: Existing student enrollments are preserved (unless capacity reduced)
+          required: true
+        - label: New schedule/capacity limits are properly enforced
+          required: true
+        - label: Activity continues to function normally with new settings
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## Implementation Hints for Copilot Agent
+        
+        **Database Structure**: Activities are stored in the `activities_collection` with this structure:
+        ```json
+        {
+          "_id": "Activity Name",
+          "description": "Activity description", 
+          "schedule": "Human readable schedule",
+          "schedule_details": {
+            "days": ["Monday", "Wednesday"],
+            "start_time": "15:30",
+            "end_time": "17:00"
+          },
+          "max_participants": 20,
+          "participants": ["student1@mergington.edu"]
+        }
+        ```
+        
+        **Files to modify**:
+        - `src/backend/database.py`: Update the activity in `initial_activities` dictionary
+        - If changing activity name, ensure `_id` field is updated consistently
+        - Generate new human-readable schedule string to match schedule_details
+        
+        **Important considerations**:
+        - If reducing max_participants, check that current enrollment doesn't exceed new limit
+        - If changing name, update any references to the old name
+        - Preserve existing participant list unless specifically requested otherwise
+        - Ensure time format remains HH:MM (24-hour)
+        - Days should match exactly: "Monday", "Tuesday", etc.

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📚 Development Guide
+    url: https://github.com/yulewu/skills-expand-your-team-with-copilot/blob/main/docs/how-to-develop.md
+    about: Learn how to set up and run the activities management system locally
+  - name: 🏫 System Documentation  
+    url: https://github.com/yulewu/skills-expand-your-team-with-copilot/blob/main/src/README.md
+    about: Learn about the Mergington High School Activities system features

@@ -1,0 +1,195 @@
+name: 👥 Student Registration Issue
+description: Report problems with student enrollment, sign-ups, or unregistration  
+title: "[STUDENT ISSUE]: <brief description>"
+labels: ["bug", "student-registration", "teacher-request"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Student Registration Issue Report
+        
+        Use this form to report problems with student enrollments, sign-ups, or unregistration in the Mergington High School Activities system.
+        
+        **Please provide specific details to help the Copilot coding agent diagnose and fix the issue efficiently.**
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Type of Issue
+      description: What kind of registration problem are you experiencing?
+      options:
+        - Cannot sign up student for activity
+        - Cannot unregister student from activity  
+        - Student appears enrolled but shouldn't be
+        - Student doesn't appear enrolled but should be
+        - Duplicate enrollments for same student
+        - Enrollment count incorrect
+        - Activity shows as full when it shouldn't be
+        - Activity allows over-enrollment
+        - Other registration problem
+    validations:
+      required: true
+
+  - type: input
+    id: student_email
+    attributes:
+      label: Student Email Address
+      description: Email address of the affected student
+      placeholder: e.g., john.smith@mergington.edu
+    validations:
+      required: true
+
+  - type: dropdown
+    id: activity_name
+    attributes:
+      label: Activity Name
+      description: Which activity is this issue related to?
+      options:
+        - Chess Club
+        - Programming Class
+        - Morning Fitness
+        - Soccer Team
+        - Art Club
+        - Math Competition Team
+        - Debate Team
+        - Weekend Robotics Workshop
+        - Manga Maniacs
+        - Other (please specify below)
+    validations:
+      required: true
+
+  - type: input
+    id: other_activity_name
+    attributes:
+      label: Other Activity Name
+      description: If you selected "Other" above, please specify the exact activity name
+
+  - type: textarea
+    id: problem_description
+    attributes:
+      label: Detailed Problem Description
+      description: Describe exactly what is happening and what you expected to happen
+      placeholder: |
+        Example: "When I try to sign up Sarah Johnson for Chess Club, I get an error saying 'Activity not found' even though Chess Club appears in the activities list. I am logged in as a teacher (username: mrodriguez)."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: List the exact steps that lead to this problem
+      placeholder: |
+        Example:
+        1. Log in as teacher (mrodriguez)
+        2. Click on Chess Club activity
+        3. Enter student email: sarah.johnson@mergington.edu
+        4. Click "Register" button
+        5. Error message appears
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_messages
+    attributes:
+      label: Error Messages
+      description: Copy any error messages you see exactly as they appear
+      placeholder: 'e.g., "HTTP 404 error: Activity not found", "Already signed up for this activity"'
+
+  - type: dropdown
+    id: teacher_username
+    attributes:
+      label: Your Teacher Username
+      description: Which teacher account are you using?
+      options:
+        - mrodriguez
+        - mchen  
+        - principal
+        - Other (please specify below)
+    validations:
+      required: true
+
+  - type: input
+    id: other_teacher_username
+    attributes:
+      label: Other Teacher Username
+      description: If you selected "Other" above, please specify your username
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How Often Does This Happen?
+      description: Is this a one-time issue or recurring problem?
+      options:
+        - "First time seeing this issue"
+        - "Happens occasionally"
+        - "Happens frequently"
+        - "Happens every time I try"
+    validations:
+      required: true
+
+  - type: input
+    id: current_enrollment_count
+    attributes:
+      label: Current Activity Enrollment Count
+      description: How many students are currently enrolled in this activity? (helps with diagnosis)
+      placeholder: e.g., 8, 12, 25
+
+  - type: input
+    id: activity_max_capacity
+    attributes:
+      label: Activity Maximum Capacity
+      description: What is the maximum number of students allowed in this activity?
+      placeholder: e.g., 15, 20, 30
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Check all that apply - what needs to work properly when this issue is fixed?
+      options:
+        - label: Student can be successfully enrolled in the activity
+          required: false
+        - label: Student can be successfully unregistered from the activity  
+          required: false
+        - label: Enrollment counts display correctly
+          required: false
+        - label: Activity capacity limits are properly enforced
+          required: false
+        - label: No error messages occur during normal registration process
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## Implementation Hints for Copilot Agent
+        
+        **Common Issues and Solutions**:
+        
+        1. **"Activity not found" errors**: Check activity name spelling in database vs. frontend
+        2. **Authentication issues**: Verify teacher credentials and session management
+        3. **Capacity problems**: Check max_participants logic in `/activities/{activity_name}/signup` endpoint
+        4. **Database inconsistency**: Check participants array vs. enrollment count calculations
+        
+        **Files to investigate**:
+        - `src/backend/routers/activities.py`: signup/unregister endpoints
+        - `src/backend/routers/auth.py`: teacher authentication
+        - `src/backend/database.py`: activity data structure
+        - `src/static/app.js`: frontend registration logic
+        
+        **Debugging steps**:
+        1. Verify activity exists in `activities_collection`
+        2. Check teacher authentication flow
+        3. Examine participants array for data consistency
+        4. Test enrollment capacity calculations
+        5. Verify API endpoint responses match expected format
+        
+        **Testing requirements**:
+        - Test with the specific student email and activity mentioned
+        - Verify fix doesn't break other student registrations
+        - Confirm enrollment counts update correctly
+        - Test both signup and unregister flows

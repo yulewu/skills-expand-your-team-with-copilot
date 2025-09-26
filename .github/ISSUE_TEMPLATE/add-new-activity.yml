@@ -1,0 +1,134 @@
+name: 🎯 Add New Activity
+description: Request to add a new extracurricular activity to the system
+title: "[NEW ACTIVITY]: Add <activity name>"
+labels: ["enhancement", "new-activity", "teacher-request"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Add New Activity Request
+        
+        Use this form to request adding a new extracurricular activity to the Mergington High School Activities system.
+        
+        **Please fill out all required fields below to help the Copilot coding agent implement your request efficiently.**
+
+  - type: input
+    id: activity_name
+    attributes:
+      label: Activity Name
+      description: What should this activity be called?
+      placeholder: e.g., "Drama Club", "Science Olympiad", "Basketball Team"
+    validations:
+      required: true
+
+  - type: textarea
+    id: activity_description
+    attributes:
+      label: Activity Description
+      description: Provide a clear description of what this activity involves
+      placeholder: e.g., "Students will learn acting, directing, and stage production while preparing for seasonal performances"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: schedule_days
+    attributes:
+      label: Meeting Days
+      description: Which days of the week will this activity meet?
+      multiple: true
+      options:
+        - Monday
+        - Tuesday
+        - Wednesday
+        - Thursday
+        - Friday
+        - Saturday
+        - Sunday
+    validations:
+      required: true
+
+  - type: input
+    id: start_time
+    attributes:
+      label: Start Time
+      description: What time does the activity start? (Use 24-hour format)
+      placeholder: e.g., 15:30 (for 3:30 PM), 07:00 (for 7:00 AM)
+    validations:
+      required: true
+
+  - type: input
+    id: end_time
+    attributes:
+      label: End Time
+      description: What time does the activity end? (Use 24-hour format)
+      placeholder: e.g., 17:00 (for 5:00 PM), 08:00 (for 8:00 AM)
+    validations:
+      required: true
+
+  - type: input
+    id: max_participants
+    attributes:
+      label: Maximum Participants
+      description: How many students can participate in this activity?
+      placeholder: e.g., 15, 25, 30
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_requirements
+    attributes:
+      label: Additional Requirements or Notes
+      description: Any special requirements, equipment needed, or other important details
+      placeholder: e.g., "Requires access to gymnasium", "Students must bring their own instruments", "Permission slips required"
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Check all that apply - what needs to be completed for this request to be considered done?
+      options:
+        - label: Activity appears in the activities list on the website
+          required: true
+        - label: Students can sign up for the activity
+          required: true
+        - label: Teachers can view enrolled students
+          required: true
+        - label: Activity shows correct schedule information
+          required: true
+        - label: Participant limit is enforced (no over-enrollment)
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## Implementation Hints for Copilot Agent
+        
+        **Database Structure**: Activities are stored in the `activities_collection` with this structure:
+        ```json
+        {
+          "_id": "Activity Name",
+          "description": "Activity description",
+          "schedule": "Human readable schedule",
+          "schedule_details": {
+            "days": ["Monday", "Wednesday"],
+            "start_time": "15:30",
+            "end_time": "17:00"
+          },
+          "max_participants": 20,
+          "participants": []
+        }
+        ```
+        
+        **Files to modify**:
+        - `src/backend/database.py`: Add the new activity to `initial_activities` dictionary
+        - Test the changes by running the application and verifying the activity appears
+        
+        **Validation requirements**:
+        - Ensure time format is HH:MM (24-hour)
+        - Days should match exactly: "Monday", "Tuesday", etc.
+        - max_participants should be a positive integer
+        - Activity name should be unique

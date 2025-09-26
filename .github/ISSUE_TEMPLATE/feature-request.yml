@@ -1,0 +1,211 @@
+name: ✨ Feature Request
+description: Request a new feature or enhancement for the activities management system
+title: "[FEATURE]: <brief description>"
+labels: ["enhancement", "feature-request", "teacher-request"]
+assignees:
+  - copilot
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Feature Request
+        
+        Use this form to request new features or enhancements for the Mergington High School Activities system.
+        
+        **Please provide clear details to help the Copilot coding agent understand and implement your request efficiently.**
+
+  - type: dropdown
+    id: feature_category
+    attributes:
+      label: Feature Category
+      description: What type of feature are you requesting?
+      options:
+        - Student management enhancements
+        - Activity management improvements  
+        - Reporting and analytics
+        - User interface/experience improvements
+        - Authentication and security
+        - Search and filtering capabilities
+        - Communication features
+        - Data export/import functionality
+        - Mobile app features
+        - Integration with other systems
+        - Administrative tools
+        - Other enhancement
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature_description
+    attributes:
+      label: Feature Description
+      description: Describe the feature you would like to see implemented
+      placeholder: |
+        Example: "I would like the ability to send email notifications to all students enrolled in an activity when the schedule changes. Currently, I have to manually contact each student individually."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem_solved
+    attributes:
+      label: Problem This Feature Solves
+      description: What problem or inefficiency would this feature address?
+      placeholder: |
+        Example: "Currently it takes me 30 minutes to manually email 15 students about schedule changes. This feature would automate that communication and ensure no students are missed."
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_workaround
+    attributes:
+      label: Current Workaround
+      description: How do you currently handle this task or situation?
+      placeholder: e.g., "I manually copy email addresses from the system and send individual emails through my personal email client"
+
+  - type: dropdown
+    id: user_types
+    attributes:
+      label: Who Would Use This Feature?
+      description: Which users would benefit from this feature?
+      multiple: true
+      options:
+        - Teachers/Activity Advisors
+        - Principal/Administrative Staff
+        - Students (indirectly)
+        - Parents/Guardians
+        - IT/System Administrators
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority_level
+    attributes:
+      label: Priority Level
+      description: How important is this feature to your daily work?
+      options:
+        - "Critical - Essential for basic job functions"
+        - "High - Would significantly improve efficiency"
+        - "Medium - Would be helpful but not urgent"
+        - "Low - Nice to have improvement"
+    validations:
+      required: true
+
+  - type: textarea
+    id: detailed_requirements
+    attributes:
+      label: Detailed Requirements
+      description: Provide specific details about how this feature should work
+      placeholder: |
+        Example:
+        - Should have a "Notify Students" button on each activity page
+        - Should include activity name, old schedule, new schedule in email
+        - Should allow custom message from teacher
+        - Should show confirmation of how many emails were sent
+        - Should log notifications for administrative tracking
+    validations:
+      required: true
+
+  - type: textarea
+    id: user_interface_ideas
+    attributes:
+      label: User Interface Ideas
+      description: How do you envision interacting with this feature?
+      placeholder: |
+        Example: "A new button next to 'Register Student' that says 'Send Notification'. When clicked, opens a modal with email template that can be customized before sending."
+
+  - type: textarea
+    id: success_criteria
+    attributes:
+      label: Success Criteria
+      description: How will you know this feature is working well?
+      placeholder: |
+        Example: 
+        - Emails are delivered to all enrolled students
+        - Teacher receives confirmation of successful delivery
+        - Students respond positively to clear communication
+        - Time spent on notifications reduced from 30 minutes to 5 minutes
+
+  - type: input
+    id: similar_systems
+    attributes:
+      label: Examples from Other Systems
+      description: Have you seen similar features in other applications?
+      placeholder: e.g., "Google Classroom has a similar announcement feature", "Our gradebook system has email notifications"
+
+  - type: dropdown
+    id: implementation_timeline
+    attributes:
+      label: Desired Timeline
+      description: When would you ideally like to see this feature?
+      options:
+        - "ASAP - Urgent need"
+        - "Within this semester"
+        - "By next school year"  
+        - "No specific timeline"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Check all that apply - what needs to work for this feature to be considered complete?
+      options:
+        - label: Feature works as described in the requirements
+          required: true
+        - label: Feature is accessible to appropriate user types
+          required: true
+        - label: Feature doesn't break existing functionality
+          required: true
+        - label: Feature includes appropriate error handling
+          required: true
+        - label: Feature is intuitive and easy to use
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        ## Implementation Hints for Copilot Agent
+        
+        **Feature Development Approach**:
+        
+        1. **Analyze existing codebase**: Understand current architecture and patterns
+        2. **Design minimal viable solution**: Start with core functionality
+        3. **Consider user experience**: Ensure feature fits naturally into current interface
+        4. **Plan for scalability**: Consider future enhancements
+        
+        **Code Areas to Consider**:
+        
+        **Frontend** (`src/static/`):
+        - `index.html`: UI elements, modals, forms
+        - `app.js`: Event handling, API calls, user interactions
+        - CSS updates for new interface elements
+        
+        **Backend** (`src/backend/`):
+        - New API endpoints in appropriate router files
+        - Database schema updates if needed
+        - Business logic implementation
+        - Error handling and validation
+        
+        **Integration Points**:
+        - Teacher authentication system
+        - Activity data structure
+        - Student enrollment data
+        - Existing API patterns
+        
+        **Testing Considerations**:
+        - Test with different user types and permissions
+        - Verify feature works with existing activities
+        - Ensure graceful error handling
+        - Test across different browsers if UI changes involved
+        
+        **Documentation Updates**:
+        - Update API documentation if new endpoints added
+        - Update user guides if significant UI changes
+        
+        **Security Considerations**:
+        - Ensure proper authentication/authorization
+        - Validate all user inputs
+        - Consider privacy implications of new features
